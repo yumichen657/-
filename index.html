@@ -1,91 +1,88 @@
 <!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
-  <meta charset="UTF-8" />
-  <title>測試</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>驚嚇遊戲</title>
   <style>
     body {
-      background: black;
+      text-align: center;
+      background-color: black;
       color: white;
       font-family: sans-serif;
-      margin: 0;
       overflow: hidden;
     }
-    #button {
+    #scareBtn {
       position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      padding: 20px 40px;
-      font-size: 24px;
+      padding: 10px 20px;
+      font-size: 18px;
       background-color: red;
-      color: white;
       border: none;
       border-radius: 10px;
       cursor: pointer;
-      transition: transform 0.2s;
     }
-    #scary {
-      display: none;
-      justify-content: center;
-      align-items: center;
+    #jumpscare {
       position: fixed;
-      inset: 0;
-      background-color: black;
-      z-index: 1000;
-    }
-    #scary img {
+      top: 0;
+      left: 0;
       width: 100vw;
       height: 100vh;
       object-fit: cover;
+      display: none;
+      z-index: 9999;
       animation: shake 0.1s infinite;
     }
     @keyframes shake {
-      0%   { transform: translate(0px, 0px) rotate(0deg); }
-      25%  { transform: translate(5px, -5px) rotate(1deg); }
-      50%  { transform: translate(-5px, 5px) rotate(-1deg); }
-      75%  { transform: translate(5px, 5px) rotate(1deg); }
-      100% { transform: translate(0px, 0px) rotate(0deg); }
+      0% { transform: translate(1px, 1px); }
+      25% { transform: translate(-1px, 2px); }
+      50% { transform: translate(3px, -1px); }
+      75% { transform: translate(-1px, -2px); }
+      100% { transform: translate(1px, 1px); }
     }
   </style>
 </head>
 <body>
 
-  <button id="button">點我</button>
+<h1>點擊紅色按鈕五次</h1>
+<button id="scareBtn">快來點我！</button>
 
-  <div id="scary">
-    <img src="scary.jpg" alt="Scary Image">
-    <audio id="scream" src="scream.mp3" preload="auto"></audio>
-  </div>
+<!-- 延遲載入的圖片，src 先不設定 -->
+<img id="jumpscare">
 
-  <script>
-    const btn = document.getElementById("button");
-    const scary = document.getElementById("scary");
-    const scream = document.getElementById("scream");
-    let count = 0;
+<!-- 延遲載入的音效 -->
+<audio id="scream"></audio>
 
-    btn.addEventListener("click", () => {
-      count++;
-      if (count >= 5) {
-        btn.style.display = "none";
-        scary.style.display = "flex";
-        scream.play();
-        return;
-      }
+<script>
+  const button = document.getElementById("scareBtn");
+  const jumpscare = document.getElementById("jumpscare");
+  const scream = document.getElementById("scream");
+  let clickCount = 0;
 
-      // 變小
-      const scale = 1 - count * 0.1;
-      btn.style.transform = `translate(-50%, -50%) scale(${scale})`;
+  // 初始放置按鈕
+  moveButton();
 
-      // 亂跑
-      const maxX = window.innerWidth - 100;
-      const maxY = window.innerHeight - 50;
-      const x = Math.random() * maxX;
-      const y = Math.random() * maxY;
-      btn.style.left = `${x}px`;
-      btn.style.top = `${y}px`;
-    });
-  </script>
+  button.addEventListener("click", () => {
+    clickCount++;
+    if (clickCount < 5) {
+      moveButton();
+      button.style.transform = `scale(${1 - clickCount * 0.1})`;
+    } else {
+      // 延遲載入圖片與音效
+      jumpscare.src = "jumpscare.jpg";
+      scream.src = "scream.mp3";
+      jumpscare.style.display = "block";
+      scream.play();
+      button.style.display = "none";
+    }
+  });
+
+  function moveButton() {
+    const x = Math.random() * (window.innerWidth - 100);
+    const y = Math.random() * (window.innerHeight - 50);
+    button.style.left = `${x}px`;
+    button.style.top = `${y}px`;
+  }
+</script>
 
 </body>
 </html>
