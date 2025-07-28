@@ -2,24 +2,26 @@
 <html lang="zh-Hant">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>測試-2</title>
+  <title>測試-3！</title>
   <style>
     body {
-      text-align: center;
-      background-color: black;
+      margin: 0;
+      background: black;
       color: white;
+      text-align: center;
       font-family: sans-serif;
       overflow: hidden;
     }
     #scareBtn {
       position: absolute;
-      padding: 10px 20px;
-      font-size: 18px;
+      padding: 12px 24px;
+      font-size: 20px;
       background-color: red;
+      color: white;
       border: none;
-      border-radius: 10px;
+      border-radius: 8px;
       cursor: pointer;
+      z-index: 1;
     }
     #jumpscare {
       position: fixed;
@@ -29,36 +31,32 @@
       height: 100vh;
       object-fit: cover;
       display: none;
-      z-index: 9999;
+      z-index: 999;
       animation: shake 0.1s infinite;
     }
     @keyframes shake {
       0% { transform: translate(1px, 1px); }
-      25% { transform: translate(-1px, 2px); }
-      50% { transform: translate(3px, -1px); }
+      25% { transform: translate(-2px, 3px); }
+      50% { transform: translate(2px, -1px); }
       75% { transform: translate(-1px, -2px); }
-      100% { transform: translate(1px, 1px); }
+      100% { transform: translate(1px, 2px); }
     }
   </style>
 </head>
 <body>
 
-<h1>點擊紅色按鈕五次</h1>
-<button id="scareBtn">快來點我！</button>
+<h1>測試-3</h1>
+<button id="scareBtn">你無法拒絕一個紅色按鈕！</button>
 
-<!-- 延遲載入的圖片，src 先不設定 -->
-<img id="jumpscare">
-
-<!-- 延遲載入的音效 -->
-<audio id="scream"></audio>
+<img id="jumpscare" src="jumpscare.jpg" alt="BOO!">
+<audio id="scream" src="scream.mp3" preload="auto"></audio>
 
 <script>
   const button = document.getElementById("scareBtn");
   const jumpscare = document.getElementById("jumpscare");
   const scream = document.getElementById("scream");
-  let clickCount = 0;
 
-  // 初始放置按鈕
+  let clickCount = 0;
   moveButton();
 
   button.addEventListener("click", () => {
@@ -67,18 +65,16 @@
       moveButton();
       button.style.transform = `scale(${1 - clickCount * 0.1})`;
     } else {
-      // 延遲載入圖片與音效
-      jumpscare.src = "jumpscare.jpg";
-      scream.src = "scream.mp3";
       jumpscare.style.display = "block";
+      scream.currentTime = 0;
       scream.play();
-      button.style.display = "none";
+      button.remove(); // 移除按鈕
     }
   });
 
   function moveButton() {
-    const x = Math.random() * (window.innerWidth - 100);
-    const y = Math.random() * (window.innerHeight - 50);
+    const x = Math.random() * (window.innerWidth - 120);
+    const y = Math.random() * (window.innerHeight - 60);
     button.style.left = `${x}px`;
     button.style.top = `${y}px`;
   }
