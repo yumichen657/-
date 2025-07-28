@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <title>你好</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      background-color: #fff;
+      transition: background-color 0.3s;
+    }
+
+    #btn {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 24px;
+      padding: 20px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    #scary {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-color: black;
+      z-index: 999;
+      justify-content: center;
+      align-items: center;
+    }
+
+    #scary img {
+      max-width: 100%;
+      max-height: 100%;
+    }
+  </style>
+</head>
+<body>
+
+<button id="btn">點我！</button>
+
+<div id="scary">
+  <img src="scary.jpg" alt="scary">
+  <!-- 若有聲音可加上這段：
+  <audio id="scream" src="scream.mp3" autoplay></audio>
+  -->
+</div>
+
+<script>
+  const btn = document.getElementById("btn");
+  const scary = document.getElementById("scary");
+  // const scream = document.getElementById("scream"); // 若有音效用
+
+  let count = 0;
+  let size = 100;
+
+  btn.addEventListener("click", () => {
+    count++;
+
+    if (count >= 5) {
+      btn.style.display = "none";
+      scary.style.display = "flex";
+      // scream.play(); // 若要播放音效
+      return;
+    }
+
+    // 縮小按鈕
+    size -= 15;
+    btn.style.fontSize = `${size}%`;
+
+    // 移動按鈕
+    const x = Math.random() * (window.innerWidth - 100);
+    const y = Math.random() * (window.innerHeight - 50);
+    btn.style.left = `${x}px`;
+    btn.style.top = `${y}px`;
+  });
+</script>
+
+</body>
+</html>
