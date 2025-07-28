@@ -2,7 +2,7 @@
 <html lang="zh-Hant">
 <head>
   <meta charset="UTF-8">
-  <title>問卷調查</title>
+  <title>測試</title>
   <style>
     body {
       margin: 0;
@@ -57,18 +57,11 @@
 
 <div id="scary">
   <img src="scary.jpg" alt="scary">
-  <audio id="scream" src="scream.mp3"></audio>
+  <!-- 有聲音的話取消註解 -->
+  <!-- <audio id="scream" src="scream.mp3" autoplay></audio> -->
 </div>
-<script>
-  // ...
-  if (count >= 5) {
-    btn.style.display = "none";
-    scary.style.display = "flex";
-    document.getElementById('scream').play();
-    return;
-  }
-</script>
 
+<script>
   const btn = document.getElementById("btn");
   const scary = document.getElementById("scary");
   // const scream = document.getElementById("scream"); // 若使用聲音
