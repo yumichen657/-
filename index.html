@@ -2,7 +2,7 @@
 <html lang="zh-Hant">
 <head>
   <meta charset="UTF-8">
-  <title>你好</title>
+  <title>問卷調查</title>
   <style>
     body {
       margin: 0;
@@ -39,6 +39,15 @@
     #scary img {
       max-width: 100%;
       max-height: 100%;
+      animation: shake 0.1s infinite;
+    }
+
+    @keyframes shake {
+      0% { transform: translate(0px, 0px) rotate(0deg); }
+      25% { transform: translate(5px, -5px) rotate(1deg); }
+      50% { transform: translate(-5px, 5px) rotate(-1deg); }
+      75% { transform: translate(5px, 5px) rotate(1deg); }
+      100% { transform: translate(-5px, -5px) rotate(0deg); }
     }
   </style>
 </head>
@@ -48,15 +57,21 @@
 
 <div id="scary">
   <img src="scary.jpg" alt="scary">
-  <!-- 若有聲音可加上這段：
-  <audio id="scream" src="scream.mp3" autoplay></audio>
-  -->
+  <audio id="scream" src="scream.mp3"></audio>
 </div>
-
 <script>
+  // ...
+  if (count >= 5) {
+    btn.style.display = "none";
+    scary.style.display = "flex";
+    document.getElementById('scream').play();
+    return;
+  }
+</script>
+
   const btn = document.getElementById("btn");
   const scary = document.getElementById("scary");
-  // const scream = document.getElementById("scream"); // 若有音效用
+  // const scream = document.getElementById("scream"); // 若使用聲音
 
   let count = 0;
   let size = 100;
@@ -75,7 +90,7 @@
     size -= 15;
     btn.style.fontSize = `${size}%`;
 
-    // 移動按鈕
+    // 隨機位置
     const x = Math.random() * (window.innerWidth - 100);
     const y = Math.random() * (window.innerHeight - 50);
     btn.style.left = `${x}px`;
